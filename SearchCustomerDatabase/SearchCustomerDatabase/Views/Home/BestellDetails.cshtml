@@ -1,0 +1,67 @@
+﻿@model SearchCustomerDatabase.Models.CustomerSearch
+@{
+    ViewBag.Title = "BestellDetails";
+}
+
+<h2>BestellDetails</h2>
+<br />
+<br />
+<div>
+    <h2>Details des Kunden</h2>
+    @foreach (var customer in Model.customer)
+    {
+        <p><b>Firma:       </b> @customer.CompanyName</p>
+        <p><b>Kundenname:  </b> @customer.ContactName</p>
+        <p><b>Adresse:     </b> @customer.Address</p>
+        <p><b>PLZ, Stadt:  </b> @customer.PostalCode, @customer.City</p>
+    }
+</div>
+<br />
+<br />
+<table class="table">
+    <tr>
+        <th>
+            OrderID
+        </th>
+        <th>
+            productName
+        </th>
+        <th>
+            Quantity
+        </th>
+        <th>
+            UnitPrice
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var orders in Model.orderDetails)
+    {
+        var productName = orders.Product.ProductName;
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => orders.OrderID)
+            </td>
+            <td>
+                @productName
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => orders.Quantity)
+            </td>
+            <td>
+                @String.Format("{0:C2}", orders.UnitPrice)
+            </td>
+
+        </tr>
+
+    }
+</table>
+
+<form action="@Url.Action("Bestellungen", "Home")" method="post">
+    <div>
+    <button type="submit" class="btn-sm" id="btnSearch" name="id" value="@Model.oldCustomerSearch">Zurück</button>
+        </div>
+    </form>
+
+
+

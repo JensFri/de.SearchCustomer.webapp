@@ -1,0 +1,107 @@
+﻿@model SearchCustomerDatabase.Models.CustomerSearch
+@{
+    ViewBag.Title = "Bestellungen";
+}
+
+<link href="~/Content/Site.css" rel="stylesheet" />
+
+<h2>Bestellungen</h2>
+<br />
+<br />
+<div>
+    <h2>Details des Kunden</h2>
+    @foreach (var customer in Model.customer)
+    {
+        <p><b>Firma:       </b> @customer.CompanyName</p>
+        <p><b>Kundenname:  </b> @customer.ContactName</p>
+        <p><b>Adresse:     </b> @customer.Address</p>
+        <p><b>PLZ, Stadt:  </b> @customer.PostalCode, @customer.City</p>
+    }
+</div>
+<br />
+<br />
+<table class="table">
+    <tr>
+        <th>
+            OrderID
+        </th>
+        <th>
+            ShipName
+        </th>
+        <th>
+            ShipAdress
+        </th>
+        <th>
+            totalPrice
+        </th>
+        <th>
+            Aktionen
+        </th>
+    </tr>
+
+
+    @foreach (var order in Model.orders)
+    {
+        //var orderid = db.Order_Details.Where(x => x.OrderID == item.OrderID);
+        var withDiscount = order.Order_Details.Where(x => x.Discount > 0);
+        var withoutDiscount = order.Order_Details.Where(x => x.Discount == 0);
+
+        if (withDiscount.Count() != 0)
+        {
+            if (withDiscount.Count() > 1)
+            {
+
+                for (var i = 0; i < withDiscount.Count(); i++)
+                {
+                    var test = withDiscount.OrderBy(x => x.OrderID).Skip(i).Take(1);
+                    Model.wDiscount = test.Sum(x => x.UnitPrice * x.Quantity);
+                    Model.zwischenSpeicher = Convert.ToDouble(Model.wDiscount);
+                    Model.discount = test.Sum(x => Model.zwischenSpeicher * x.Discount);
+                    Model.sumWDiscount = test.Sum(x => Model.zwischenSpeicher - Model.discount);
+                    Model.totalDiscount = Model.totalDiscount + Model.sumWDiscount;
+                }
+            }
+            else
+            {
+                Model.wDiscount = withDiscount.Sum(x => x.UnitPrice * x.Quantity);
+                Model.zwischenSpeicher = Convert.ToDouble(Model.wDiscount);
+                Model.discount = withDiscount.Sum(x => Model.zwischenSpeicher * x.Discount);
+                Model.sumWDiscount = withDiscount.Sum(x => Model.zwischenSpeicher - Model.discount);
+                Model.totalDiscount = Model.totalDiscount + Model.sumWDiscount;
+            }
+        }
+
+        if (withoutDiscount.Count() != 0)
+        {
+            Model.woDiscount = withoutDiscount.Sum(x => x.UnitPrice * x.Quantity);
+            Model.sumWoDiscount = Convert.ToDouble(Model.woDiscount);
+        }
+
+        Model.totalPrice = Model.totalDiscount + Model.sumWoDiscount;
+
+        Model.sumWoDiscount = 0.0;
+        Model.totalDiscount = 0.0;
+
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => order.OrderID)
+
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => order.ShipName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => order.ShipAddress)
+            </td>
+            <td>
+                @string.Format("{0:C2}", Model.totalPrice)
+            </td>
+            <td>
+                @Html.ActionLink("BestellDetails", "BestellDetails", new { id = order.OrderID, oldId = Model.oldCustomerSearch})
+            </td>
+        </tr>
+    }
+
+
+</table>
+

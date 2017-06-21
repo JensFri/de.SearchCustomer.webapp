@@ -1,0 +1,64 @@
+﻿@model SearchCustomerDatabase.Models.CustomerSearch
+@{
+    ViewBag.Title = "Kunde";
+}
+
+<link href="~/Content/Site.css" rel="stylesheet" />
+
+
+
+<h2>Kundesuche</h2>
+<form action="@Url.Action("GetCustomer", "Home")" method="post">
+    <input type="text" class="input-sm" id="searchCustomer" placeholder="Kunden suchen..." name="searchCustomer" />
+    <button type="submit" class="btn-sm" id="btnSearch">Suchen</button>
+
+
+    @if (Model != null)
+    {
+        <table class="table">
+            <tr>
+                <th>
+                    OrderID
+                </th>
+                <th>
+                    CompanyName
+                </th>
+                <th>
+                    ContactName
+                </th>
+                <th>
+                    Aktionen
+                </th>
+                <th></th>
+            </tr>
+
+            @foreach (var item in Model.customer)
+            {
+
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CustomerID)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CompanyName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ContactName)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Bestellungen", "Bestellungen", new { id = item.CustomerID })
+                    </td>
+                    <td>
+                        @Html.ActionLink("Bearbeiten", "Bearbeiten", new { id = item.CustomerID, searchCustomer = Model.oldCustomerSearch})
+                    </td>
+
+                </tr>
+
+            }
+        </table>
+    }
+</form>
+
+
+@*<input type="text" class="input-sm" id="searchCustomer" placeholder="Kunden suchen..." />
+    <button type="submit" class="btn-sm" id="btnSearch">Suchen</button>*@
