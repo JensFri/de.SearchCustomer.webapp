@@ -8,8 +8,8 @@
 <h2>Bestellungen</h2>
 <br />
 <br />
-@*<div>
-    <h4>Details des Kunden</h4>
+<div>
+    <h2>Details des Kunden</h2>
     @foreach (var customer in Model.customer)
     {
         <p><b>Firma:       </b> @customer.CompanyName</p>
@@ -17,24 +17,10 @@
         <p><b>Adresse:     </b> @customer.Address</p>
         <p><b>PLZ, Stadt:  </b> @customer.PostalCode, @customer.City</p>
     }
-</div>*@
-
-    <ul class="collection with-header">
-        <li class="collection-header"><h4>Details des Kunden</h4></li>
-        @foreach (var customer in Model.customer)
-        {
-
-            <li class="collection-item"><b>Firma:       </b> @customer.CompanyName</li>
-            <li class="collection-item"><b>Kundenname:  </b> @customer.ContactName</li>
-            <li class="collection-item"><b>Adresse:     </b> @customer.Address</li>
-            <li class="collection-item"><b>PLZ, Stadt:  </b> @customer.PostalCode, @customer.City</li>
-
-        }
-    </ul>
-
+</div>
 <br />
 <br />
-<table class="striped">
+<table class="table">
     <tr>
         <th>
             OrderID

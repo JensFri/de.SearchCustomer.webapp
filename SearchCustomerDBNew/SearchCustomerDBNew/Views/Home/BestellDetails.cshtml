@@ -7,7 +7,7 @@
 <br />
 <br />
 <div>
-    <h4>Details des Kunden</h4>
+    <h2>Details des Kunden</h2>
     @foreach (var customer in Model.customer)
     {
         <p><b>Firma:       </b> @customer.CompanyName</p>
@@ -18,7 +18,7 @@
 </div>
 <br />
 <br />
-<table class="striped">
+<table class="table">
     <tr>
         <th>
             OrderID
@@ -56,10 +56,10 @@
 
     }
 </table>
-<br/>
+
 <form action="@Url.Action("Bestellungen", "Home")" method="post">
     <div>
-    <button type="submit" class="btn waves-effect waves-light" id="btnSearch" name="id" value="@Model.oldCustomerSearch">Zurück</button>
+    <button type="submit" class="btn-sm" id="btnSearch" name="id" value="@Model.oldCustomerSearch">Zurück</button>
         </div>
     </form>
 

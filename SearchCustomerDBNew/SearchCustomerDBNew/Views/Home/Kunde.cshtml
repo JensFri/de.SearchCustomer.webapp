@@ -3,17 +3,17 @@
     ViewBag.Title = "Kunde";
 }
 
-<link href="~/Content/Site.css" rel="stylesheet" />
+<link href="~/Content/Site.css" rel="stylesheet" type="text/css" />
 
-<h2>Kundensuche</h2>
+<h2>Kundesuche</h2>
 <form action="@Url.Action("GetCustomer", "Home")" method="post">
     <input type="text" class="input-sm" id="searchCustomer" placeholder="Kunden suchen..." name="searchCustomer" />
-    <button type="submit" class="btn waves-effect waves-light" id="btnSearch">Suchen</button>
-
-
+    <button type="submit" class="btn-sm" id="btnSearch">Suchen</button>
+    <br />
+    <br />
     @if (Model != null)
     {
-        <table class="striped">
+        <table class="table">
             <tr>
                 <th>
                     OrderID

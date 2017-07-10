@@ -1,7 +1,6 @@
-﻿using System.Web;
-using System.Web.Optimization;
+﻿using System.Web.Optimization;
 
-namespace SearchCustomerDatabase
+namespace SearchCustomerDBNew
 {
     public class BundleConfig
     {
@@ -24,7 +23,7 @@ namespace SearchCustomerDatabase
                       "~/Scripts/respond.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
-                      "~/Content/materialize.css",
+                      "~/Content/bootstrap.css",
                       "~/Content/site.css"));
         }
     }
